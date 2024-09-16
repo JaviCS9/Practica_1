@@ -10,6 +10,7 @@ Aquesta pràctica forma part de l'assignatura d'Anàlisi de Dades i consisteix e
 
 El nostre grup en concret, hem decidit treballar amb un *database* sobre les dades urbanístiques de les illes ("manzanas") de la ciutat de Barcelona. Aquestes dades contenen moltes variables numèriques d'entre les quals ens interessen, per exemple, el nom del barri i districte on es troben i el nombre de vivendes, locals, etc. que trobem a cada illa.
 A continuació intentarem respondre la pregunta: 
+La majoria de locals de l'eixample són vivendes?
 
 
 ```{r} 
@@ -87,10 +88,19 @@ quantile(data$NUM_ALTRES, c(0.25, 0.50, 0.75))
 # Estudi de la pregunta.
 
 En aquest punt intentarem respondre a la pregunta:
-### Quina distribució de locals trobam a cada districte?
+### La majoria de locals de l'Eixample són vivendes?
 
+```{r}
+eix=subset(data, data$NOM_DISTRICTE=="Eixample")
+perc_viv=sum(eix$NUM_VIVENDES)/sum(eix$NUM_ALTRES, eix$NUM_PARKINGS, eix$NUM_VIVENDES)
+perc_park=sum(eix$NUM_PARKINGS)/sum(eix$NUM_ALTRES, eix$NUM_PARKINGS, eix$NUM_VIVENDES)
+perc_alt=sum(eix$NUM_ALTRES)/sum(eix$NUM_ALTRES, eix$NUM_PARKINGS, eix$NUM_VIVENDES)
+```
+```{r}
+c(perc_viv, perc_park, perc_alt)
+```
 
-
+En resum, el percentatge de locals que són Vivendes (51.40%) és majoria. És a dir, que l'Eixample, sota el nostre criteri, és un barri Residencial.
 
 
 
