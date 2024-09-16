@@ -8,7 +8,8 @@
 
 Aquesta pràctica forma part de l'assignatura d'Anàlisi de Dades i consisteix en descarregar un *database* de la pàgina de dades oficial del $\href{https://datos.gob.es/}{Govern d'Espanya}$ i fer un petit anàlisi estadístic de les dades trobader per a respondre alguna pregunta adient.
 
-El nostre grup en concret, hem decidit treballar amb un *database* sobre les dades urbanístiques de les illes ("manzanas") de la ciutat de Barcelona. Aquestes dades contenen moltes variables numèriques d'entre les quals ens interessen, per exemple, el nom del barri i districte on es troben, 
+El nostre grup en concret, hem decidit treballar amb un *database* sobre les dades urbanístiques de les illes ("manzanas") de la ciutat de Barcelona. Aquestes dades contenen moltes variables numèriques d'entre les quals ens interessen, per exemple, el nom del barri i districte on es troben i el nombre de vivendes, locals, etc. que trobem a cada illa.
+A continuació intentarem respondre la pregunta: 
 
 
 ```{r} 
@@ -83,10 +84,10 @@ Altres:
 quantile(data$NUM_ALTRES, c(0.25, 0.50, 0.75))
 ```
 
+# Estudi de la pregunta.
 
-
-
-
+En aquest punt intentarem respondre a la pregunta:
+### Quina distribució de locals trobam a cada districte?
 
 
 
