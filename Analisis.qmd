@@ -8,4 +8,10 @@
 
 Aquesta pràctica forma part de l'assignatura d'Anàlisi de Dades i consisteix en descarregar un *database* de la pàgina de dades oficial del $\href{https://datos.gob.es/}{Govern d'Espanya}$.
 
-El nostre grup en concret, hem decidit treballar amb un *database* sobre
+El nostre grup en concret, hem decidit treballar amb un *database* sobre les dades urbanístiques de les illes ("mazanas") de la ciutat de Barcelona.
+
+
+```{r}
+
+```
+
