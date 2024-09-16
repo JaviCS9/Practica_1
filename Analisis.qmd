@@ -14,11 +14,32 @@ El nostre grup en concret, hem decidit treballar amb un *database* sobre les dad
 ```{r} 
 data = read.csv('TAULA_MAP_ILLA.csv', fileEncoding = "UTF-8")
 
-data = subset(data, select = c(5,6,8,9,10,11,13,14,15))
+data = subset(data, select = c(5,6,8,9,10,11,12,13,14,15))
 
 data$NOM_DISTRICTE = as.factor(data$NOM_DISTRICTE)
 data$NOM_BARRI = as.factor(data$NOM_BARRI)
 
 head(data)
 ```
+
+# Presentació de dades
+
+La primera variable que trobam és *NOM_DISTRICTE*, aquesta l'hem convertida en tipus factor i consta de 10 nivells; representant els 10 diferents Districtes que es troben a Barcelona.
+```{r}
+levels(data$NOM_DISTRICTE)
+```
+
+
+La següent variable és *NOM_BARRI*, també l'hem convertida en tipus factor, però aquesta consta de 74 nivells, que són els barris de la ciutat.
+```{r}
+head(levels(data$NOM_BARRI))
+```
+
+A continuació, des del dataset, hem seleccionat la variable *NUM_PARC*, la qual guarda (en nombres enters) el número de parcel·les de cada illa. Mostrem una taula dels valors que pren aquesta:
+
+```{r}
+
+```
+
+
 
