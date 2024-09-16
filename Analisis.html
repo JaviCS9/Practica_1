@@ -125,7 +125,7 @@ window.Quarto = {
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">'TAULA_MAP_ILLA.csv'</span>, <span class="at">fileEncoding =</span> <span class="st">"UTF-8"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">subset</span>(data, <span class="at">select =</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>,<span class="dv">11</span>,<span class="dv">13</span>,<span class="dv">14</span>,<span class="dv">15</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">subset</span>(data, <span class="at">select =</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>,<span class="dv">11</span>,<span class="dv">12</span>,<span class="dv">13</span>,<span class="dv">14</span>,<span class="dv">15</span>))</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>NOM_DISTRICTE <span class="ot">=</span> <span class="fu">as.factor</span>(data<span class="sc">$</span>NOM_DISTRICTE)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>NOM_BARRI <span class="ot">=</span> <span class="fu">as.factor</span>(data<span class="sc">$</span>NOM_BARRI)</span>
@@ -139,13 +139,129 @@ window.Quarto = {
 4  Ciutat Vella                        la Barceloneta        3          3
 5  Ciutat Vella                        la Barceloneta        4        698
 6  Ciutat Vella Sant Pere, Santa Caterina i la Ribera        2          0
-  NUM_VIVENDES NUM_PARKINGS SUP_CONS SUP_SOBRE_RASANT SUP_SOTA_RASANT
-1            1            3   202635            94173          108462
-2            0            0        0                0               0
-3            0            0        0                0               0
-4            0            0     3711                0            3711
-5           60          563    94304            54222           40082
-6            0            0        0                0               0</code></pre>
+  NUM_VIVENDES NUM_PARKINGS NUM_ALTRES SUP_CONS SUP_SOBRE_RASANT
+1            1            3         89   202635            94173
+2            0            0          0        0                0
+3            0            0          0        0                0
+4            0            0          3     3711                0
+5           60          563         75    94304            54222
+6            0            0          0        0                0
+  SUP_SOTA_RASANT
+1          108462
+2               0
+3               0
+4            3711
+5           40082
+6               0</code></pre>
+</div>
+</div>
+</section>
+<section id="presentació-de-dades" class="level1">
+<h1>Presentació de dades</h1>
+<p>La primera variable que trobam és <em>NOM_DISTRICTE</em>, aquesta l’hem convertida en tipus factor i consta de 10 nivells; representant els 10 diferents Districtes que es troben a Barcelona.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(data<span class="sc">$</span>NOM_DISTRICTE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Ciutat Vella"        "Eixample"            "Gràcia"             
+ [4] "Horta-Guinardó"      "Les Corts"           "Nou Barris"         
+ [7] "Sant Andreu"         "Sant Martí"          "Sants-Montjuïc"     
+[10] "Sarrià-Sant Gervasi"</code></pre>
+</div>
+</div>
+<p>La següent variable és <em>NOM_BARRI</em>, també l’hem convertida en tipus factor, però aquesta consta de 74 nivells, que són els barris de la ciutat.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">levels</span>(data<span class="sc">$</span>NOM_BARRI))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "??"               "Baró de Viver"    "Can Baró"         "Can Peguera"     
+[5] "Canyelles"        "Ciutat Meridiana"</code></pre>
+</div>
+</div>
+<p>A continuació, des del dataset, hem seleccionat la variable <em>NUM_PARC</em>, la qual guarda (en nombres enters) el número de parcel·les de cada illa. Mostrem la moda d’aquesta (amb el paquet <em>modeest</em>):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modeest)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mfv</span>(data<span class="sc">$</span>NUM_PARC)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1</code></pre>
+</div>
+</div>
+<p>La variable <em>NUM_PARC</em> resulta concentrar-se en l’1, en el següent histograma (obtingut de R gallery) veim aquest fenòmen: (hem acotat la representació deixant de banda els “outliers”)</p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+not found in Windows font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+not found in Windows font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+not found in Windows font database</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family not found in Windows font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family not found in Windows font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family not found in Windows font database</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+font family not found in Windows font database
+Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+font family not found in Windows font database
+Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+font family not found in Windows font database
+Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+font family not found in Windows font database</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Analisis_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><em>NUM_LOCALS</em> és una variable que ens dona un recompte numèric dels locals que trobam a cada illa. La mitjana que pren aquesta variable és:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(data<span class="sc">$</span>NUM_LOCALS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 274.8909</code></pre>
+</div>
+</div>
+<p>Les variables <em>NUM_VIVENDES</em>, <em>NUM_PARKINGS</em> i <em>NUM_ALTRES</em> també són de tipus enter i són els distints tipus de locals que hi podem trobar per illa. Treurem els quantils centrals per a fer-nos una idea de les dades.</p>
+<p>Vivendes:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>25% 50% 75% 
+ 16  88 194 </code></pre>
+</div>
+</div>
+<p>Parkings:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code> 25%  50%  75% 
+ 0.0  9.5 87.0 </code></pre>
+</div>
+</div>
+<p>Altres:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>25% 50% 75% 
+  9  27  57 </code></pre>
 </div>
 </div>
 </section>

@@ -14,7 +14,7 @@ El nostre grup en concret, hem decidit treballar amb un *database* sobre les dad
 ```{r} 
 data = read.csv('TAULA_MAP_ILLA.csv', fileEncoding = "UTF-8")
 
-data = subset(data, select = c(5,6,8,9,10,11,12,13,14,15))
+data = subset(data, select = c(5,6,8,9,10,11,12))
 
 data$NOM_DISTRICTE = as.factor(data$NOM_DISTRICTE)
 data$NOM_BARRI = as.factor(data$NOM_BARRI)
@@ -42,28 +42,55 @@ library(modeest)
 mfv(data$NUM_PARC)
 ```
 
-*NUM_LOCALS* és una variable que ens dona un recompte numèric dels locals que trobam a cada illa. La mitjana que pren aquesta variable és:
-```{r}
-mean(data$NUM_LOCALS)
-```
+La variable *NUM_PARC* resulta concentrar-se en l'1, en el següent histograma (obtingut de R gallery) veim aquest fenòmen: (hem acotat la representació deixant de banda els "outliers")
 
+```{r echo=FALSE} 
 
-
-La variable *NUM_PARKINGS* ens dona el nombre de parkings que hi ha a cada illa. Aquesta la presentarem mitjançant un histograma de *ggplot* (obtingut de R gallery).
-
-```{r}
 library(tidyverse)
 library(hrbrthemes)
 
 p <- data %>%
-  ggplot( aes(x=NUM_PARKINGS)) +
+  filter( NUM_PARC<70 ) %>%
+  ggplot( aes(x=NUM_PARC)) +
     geom_histogram( binwidth=3, fill="#69b3a2", color="#e9ecef", alpha=0.9) +
-    ggtitle("HOLAAA") +
+    ggtitle("Histograma d'illes segons el nombre de parcel·les") +
     theme_ipsum() +
     theme(
       plot.title = element_text(size=15)
     )
 ```
+
+```{r message = FALSE}
+p
+```
+*NUM_LOCALS* és una variable que ens dona un recompte numèric dels locals que trobam a cada illa. La mitjana que pren aquesta variable és:
+```{r}
+mean(data$NUM_LOCALS)
+```
+
+Les variables *NUM_VIVENDES*, *NUM_PARKINGS* i *NUM_ALTRES* també són de tipus enter i són els distints tipus de locals que hi podem trobar per illa. Treurem els quantils centrals per a fer-nos una idea de les dades.
+
+Vivendes:
+```{r echo = FALSE}
+quantile(data$NUM_VIVENDES, c(0.25, 0.50, 0.75))
+```
+Parkings:
+```{r echo = FALSE}
+quantile(data$NUM_PARKINGS, c(0.25, 0.50, 0.75))
+```
+Altres:
+```{r echo = FALSE}
+quantile(data$NUM_ALTRES, c(0.25, 0.50, 0.75))
+```
+
+
+
+
+
+
+
+
+
 
 
 
