@@ -35,11 +35,36 @@ La següent variable és *NOM_BARRI*, també l'hem convertida en tipus factor, p
 head(levels(data$NOM_BARRI))
 ```
 
-A continuació, des del dataset, hem seleccionat la variable *NUM_PARC*, la qual guarda (en nombres enters) el número de parcel·les de cada illa. Mostrem una taula dels valors que pren aquesta:
+A continuació, des del dataset, hem seleccionat la variable *NUM_PARC*, la qual guarda (en nombres enters) el número de parcel·les de cada illa. Mostrem la moda d'aquesta (amb el paquet *modeest*):
 
 ```{r}
-
+library(modeest)
+mfv(data$NUM_PARC)
 ```
+
+*NUM_LOCALS* és una variable que ens dona un recompte numèric dels locals que trobam a cada illa. La mitjana que pren aquesta variable és:
+```{r}
+mean(data$NUM_LOCALS)
+```
+
+
+
+La variable *NUM_PARKINGS* ens dona el nombre de parkings que hi ha a cada illa. Aquesta la presentarem mitjançant un histograma de *ggplot* (obtingut de R gallery).
+
+```{r}
+library(tidyverse)
+library(hrbrthemes)
+
+p <- data %>%
+  ggplot( aes(x=NUM_PARKINGS)) +
+    geom_histogram( binwidth=3, fill="#69b3a2", color="#e9ecef", alpha=0.9) +
+    ggtitle("HOLAAA") +
+    theme_ipsum() +
+    theme(
+      plot.title = element_text(size=15)
+    )
+```
+
 
 
 
