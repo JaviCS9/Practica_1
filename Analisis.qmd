@@ -11,7 +11,15 @@ Aquesta pràctica forma part de l'assignatura d'Anàlisi de Dades i consisteix e
 El nostre grup en concret, hem decidit treballar amb un *database* sobre les dades urbanístiques de les illes ("manzanas") de la ciutat de Barcelona.
 
 
-```{r}
+```{r} 
+data = read.csv('TAULA_MAP_ILLA.csv')
+
+data = subset(data, select = c(5,6,8,9,10,11,13,14,15))
+
+data$NOM_DISTRICTE = as.factor(data$NOM_DISTRICTE)
+data$NOM_BARRI = as.factor(data$NOM_BARRI)
+
+str(data)
 
 ```
 
